@@ -2,12 +2,15 @@ package com.sirvar.bluetoothkit
 
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
-import android.bluetooth.BluetoothSocket
+import android.util.Log
+import java.io.IOException
+import java.util.*
 
 class BluetoothKit() {
 
+    private val TAG = "BluetoothKit"
     private var bluetoothAdapter: BluetoothAdapter
-    private lateinit var bluetoothSocket: BluetoothSocket
+    private lateinit var bluetoothSocket: BluetoothKitSocketInterface
 
     init {
         bluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
@@ -73,12 +76,72 @@ class BluetoothKit() {
     }
 
     /**
+     * Connect to BluetoothDevice with random UUID
+     * @param BluetoothDevice device to connect to
+     */
+    fun connect(device: BluetoothDevice) {
+        connect(device, UUID.randomUUID())
+    }
+
+    /**
+     * Connect to BluetoothDevice with UUID as string
+     * @param BluetoothDevice device to connect to
+     * @param String connection UUID
+     */
+    fun connect(device: BluetoothDevice, uuid: String) {
+        connect(device, UUID.fromString(uuid))
+    }
+
+    /**
+     * Connect to BluetoothDevice with specific UUID
+     * @param BluetoothDevice device to connect to
+     * @param UUID connection UUID
+     */
+    fun connect(device: BluetoothDevice, uuid: UUID) {
+        // attempt fast insecure connection
+        bluetoothSocket = BluetoothKitSocket(device.createRfcommSocketToServiceRecord(uuid))
+        try {
+            bluetoothSocket.connect()
+        } catch (e: IOException) {
+            Log.w(TAG, "Connection failed. Trying to establish a secure connection")
+            // attempt slow secured connection
+            bluetoothSocket = BluetoothKitSecuredSocket(bluetoothSocket.socket)
+            try {
+                bluetoothSocket.connect()
+            } catch (e: IOException) {
+                Log.w(TAG, "Secure connection failed. Stopping.", e)
+            } catch (e: Exception) {
+                Log.w(TAG, "Could not connect to device. Stopping.", e)
+            }
+        }
+    }
+
+    /**
+     * Closes all IO streams and terminates the socket.
+     * NOTE: does not turn off bluetooth
+     */
+    fun disconnect() {
+        bluetoothSocket.inputStream.close()
+        bluetoothSocket.outputStream.close()
+        bluetoothSocket.close()
+    }
+
+    /**
      * Get the BluetoothAdapter
      * @return BluetoothAdapter
      * @see android.bluetooth.BluetoothAdapter
      */
     fun getBluetoothAdapter(): BluetoothAdapter {
         return bluetoothAdapter
+    }
+
+    /**
+     * Get the bluetooth socket implementing BluetoothKitSocketInterface
+     * @return BluetoothKitSocketInterface
+     * @see BluetoothKitSocketInterface
+     */
+    fun getBluetoothSocket(): BluetoothKitSocketInterface {
+        return bluetoothSocket
     }
 
 }

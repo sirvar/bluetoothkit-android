@@ -4,7 +4,7 @@ import android.bluetooth.BluetoothSocket
 import java.io.InputStream
 import java.io.OutputStream
 
-class BluetoothKitSocket(val bluetoothSocket: BluetoothSocket): BluetoothKitSocketInterface {
+open class BluetoothKitSocket(override val socket: BluetoothSocket) : BluetoothKitSocketInterface {
 
     override val inputStream: InputStream
         get() = socket.inputStream
@@ -14,8 +14,6 @@ class BluetoothKitSocket(val bluetoothSocket: BluetoothSocket): BluetoothKitSock
         get() = socket.remoteDevice.name
     override val deviceAddress: String
         get() = socket.remoteDevice.address
-    override val socket: BluetoothSocket
-        get() = socket
 
     override fun connect() {
         socket.connect()
