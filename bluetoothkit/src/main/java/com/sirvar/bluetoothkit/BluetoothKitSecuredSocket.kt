@@ -7,6 +7,10 @@ import java.io.InputStream
 import java.io.OutputStream
 import java.lang.reflect.Method
 
+/**
+ * Secured Bluetooth Socket wrapper with low level method invocation
+ * @author Rikin Katyal
+ */
 class BluetoothKitSecuredSocket(bluetoothSocket: BluetoothSocket) : BluetoothKitSocket(bluetoothSocket) {
 
     private val TAG = "BluetoothKit"

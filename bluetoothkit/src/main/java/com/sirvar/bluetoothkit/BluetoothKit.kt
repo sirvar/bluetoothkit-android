@@ -6,6 +6,10 @@ import android.util.Log
 import java.io.IOException
 import java.util.*
 
+/**
+ * BluetoothKit controller to interface with Android BluetoothAdapter and BluetoothSocket
+ * @author Rikin Katyal
+ */
 class BluetoothKit() {
 
     private val TAG = "BluetoothKit"

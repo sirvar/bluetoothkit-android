@@ -4,6 +4,10 @@ import android.bluetooth.BluetoothSocket
 import java.io.InputStream
 import java.io.OutputStream
 
+/**
+ * Bluetooth Socket wrapper
+ * @author Rikin Katyal
+ */
 open class BluetoothKitSocket(override val socket: BluetoothSocket) : BluetoothKitSocketInterface {
 
     override val inputStream: InputStream

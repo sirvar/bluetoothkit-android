@@ -9,22 +9,15 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : AppCompatActivity() {
 
     val TAG: String = "MainActivity"
-    lateinit var bluetoothKit: BluetoothKit
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        bluetoothKit = BluetoothKit()
+        val bluetoothKit: BluetoothKit = BluetoothKit()
 
         enable.setOnClickListener { bluetoothKit.enable() }
         disable.setOnClickListener { bluetoothKit.disable() }
 
-        val bluetoothDevice = bluetoothKit.getDeviceByName("Rikin's AirPods")
-        connect.setOnClickListener {
-            if (bluetoothDevice != null) {
-                bluetoothKit.connect(bluetoothDevice)
-            }
-        }
     }
 }
