@@ -21,7 +21,7 @@ allprojects {
 then add the dependency
 ```gradle
 dependencies {
-  implementation 'com.github.sirvar:bluetoothkit-android:Tag'
+  implementation 'com.github.sirvar:bluetoothkit-android:v0.1'
 }
 ```
 ## Usage
