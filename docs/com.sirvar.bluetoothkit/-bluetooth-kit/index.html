@@ -1,0 +1,119 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>BluetoothKit - </title>
+<link rel="stylesheet" href="../../style.css">
+</HEAD>
+<BODY>
+<a href="../index.html">com.sirvar.bluetoothkit</a>&nbsp;/&nbsp;<a href=".">BluetoothKit</a><br/>
+<br/>
+<h1>BluetoothKit</h1>
+<code><span class="keyword">class </span><span class="identifier">BluetoothKit</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">Any</span></code>
+<p>BluetoothKit controller to interface with Android BluetoothAdapter and BluetoothSocket</p>
+<p><strong>Author</strong><br/>
+Rikin Katyal</p>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<a href="-init-.html">&lt;init&gt;</a></td>
+<td>
+<code><span class="identifier">BluetoothKit</span><span class="symbol">(</span><span class="symbol">)</span></code>
+<p>BluetoothKit controller to interface with Android BluetoothAdapter and BluetoothSocket</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<a href="connect.html">connect</a></td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">connect</span><span class="symbol">(</span><span class="identifier" id="com.sirvar.bluetoothkit.BluetoothKit$connect()/device">device</span><span class="symbol">:</span>&nbsp;<span class="identifier">&lt;ERROR CLASS&gt;</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Unit</span></code>
+<p>Connect to BluetoothDevice with random UUID</p>
+<code><span class="keyword">fun </span><span class="identifier">connect</span><span class="symbol">(</span><span class="identifier" id="com.sirvar.bluetoothkit.BluetoothKit$connect(, kotlin.String)/device">device</span><span class="symbol">:</span>&nbsp;<span class="identifier">&lt;ERROR CLASS&gt;</span><span class="symbol">, </span><span class="identifier" id="com.sirvar.bluetoothkit.BluetoothKit$connect(, kotlin.String)/uuid">uuid</span><span class="symbol">:</span>&nbsp;<span class="identifier">String</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Unit</span></code>
+<p>Connect to BluetoothDevice with UUID as string</p>
+<code><span class="keyword">fun </span><span class="identifier">connect</span><span class="symbol">(</span><span class="identifier" id="com.sirvar.bluetoothkit.BluetoothKit$connect(, )/device">device</span><span class="symbol">:</span>&nbsp;<span class="identifier">&lt;ERROR CLASS&gt;</span><span class="symbol">, </span><span class="identifier" id="com.sirvar.bluetoothkit.BluetoothKit$connect(, )/uuid">uuid</span><span class="symbol">:</span>&nbsp;<span class="identifier">&lt;ERROR CLASS&gt;</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Unit</span></code>
+<p>Connect to BluetoothDevice with specific UUID</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="disable.html">disable</a></td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">disable</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Boolean</span></code>
+<p>Disable bluetooth on device</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="disconnect.html">disconnect</a></td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">disconnect</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Unit</span></code>
+<p>Closes all IO streams and terminates the socket.
+NOTE: does not turn off bluetooth</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="enable.html">enable</a></td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">enable</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Boolean</span></code>
+<p>Enables bluetooth on device</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="get-bluetooth-adapter.html">getBluetoothAdapter</a></td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">getBluetoothAdapter</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">&lt;ERROR CLASS&gt;</span></code>
+<p>Get the BluetoothAdapter</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="get-bluetooth-socket.html">getBluetoothSocket</a></td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">getBluetoothSocket</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="../-bluetooth-kit-socket-interface/index.html"><span class="identifier">BluetoothKitSocketInterface</span></a></code>
+<p>Get the bluetooth socket implementing BluetoothKitSocketInterface</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="get-device-by-address.html">getDeviceByAddress</a></td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">getDeviceByAddress</span><span class="symbol">(</span><span class="identifier" id="com.sirvar.bluetoothkit.BluetoothKit$getDeviceByAddress(kotlin.String)/address">address</span><span class="symbol">:</span>&nbsp;<span class="identifier">String</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">&lt;ERROR CLASS&gt;</span><span class="symbol">?</span></code>
+<p>Get paired BluetoothDevice by MAC address</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="get-device-by-name.html">getDeviceByName</a></td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">getDeviceByName</span><span class="symbol">(</span><span class="identifier" id="com.sirvar.bluetoothkit.BluetoothKit$getDeviceByName(kotlin.String)/name">name</span><span class="symbol">:</span>&nbsp;<span class="identifier">String</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">&lt;ERROR CLASS&gt;</span><span class="symbol">?</span></code>
+<p>Get paired BluetoothDevice by name</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="get-paired-devices.html">getPairedDevices</a></td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">getPairedDevices</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Set</span><span class="symbol">&lt;</span><span class="identifier">&lt;ERROR CLASS&gt;</span><span class="symbol">&gt;</span></code>
+<p>Gets Set of paired BluetoothDevice</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="is-enabled.html">isEnabled</a></td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">isEnabled</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Boolean</span></code>
+<p>Checks if bluetooth is enabled</p>
+</td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>
