@@ -45,6 +45,6 @@ bluetoothKit.connect(device)
 ```
 *That's it*
 
-## Check out the complete docs in the [wiki](https://github.com/sirvar/bluetoothkit-android/wiki/BluetoothKit-Docs)
+## Check out the complete docs [here](https://sirvar.github.io/bluetoothkit-android/com.sirvar.bluetoothkit/-bluetooth-kit/index.html)
 
 Made with ❤ by Rikin Katyal
