@@ -121,6 +121,60 @@ class BluetoothKit() {
     }
 
     /**
+     * Write ByteArray to the output stream
+     * @param ByteArray the data
+     */
+    fun write(b: ByteArray) {
+        bluetoothSocket.outputStream.write(b)
+    }
+
+    /**
+     * Write ByteArray to the output stream with offset and length
+     * @param ByteArray the data
+     * @param Int the start offset in the data
+     * @param Int  the number of bytes to write
+     *
+     */
+    fun write(b: ByteArray, off: Int, len: Int) {
+        bluetoothSocket.outputStream.write(b, off, len)
+    }
+
+    /**
+     * Write Int byte to the output stream
+     * @param Int the byte
+     */
+    fun write(b: Int) {
+        bluetoothSocket.outputStream.write(b)
+    }
+
+    /**
+     * Reads next byte of data
+     * @return the total number of bytes read into the buffer, or -1 if there is no more data
+     */
+    fun read(): Int {
+        return bluetoothSocket.inputStream.read()
+    }
+
+    /**
+     * Reads up to len bytes of data from the input stream into an array of bytes
+     * @param ByteArray the data
+     * @param Int the start offset in the data
+     * @param Int the max number of bytes to write
+     * @return the total number of bytes read into the buffer, or -1 if there is no more data
+     */
+    fun read(b: ByteArray, off: Int, len: Int): Int {
+        return bluetoothSocket.inputStream.read(b, off, len)
+    }
+
+    /**
+     * Reads some number of bytes from the input stream and stores them into the buffer array b
+     * @param ByteArray the buffer into which the data is read
+     */
+    fun read(b: ByteArray): Int {
+        return bluetoothSocket.inputStream.read(b)
+    }
+
+    /**
      * Closes all IO streams and terminates the socket.
      * NOTE: does not turn off bluetooth
      */
