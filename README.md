@@ -21,8 +21,26 @@ allprojects {
 then add the dependency
 ```gradle
 dependencies {
-  implementation 'com.github.sirvar:bluetoothkit-android:v0.1'
+  implementation 'com.github.sirvar:bluetoothkit-android:v0.2'
 }
+```
+Alternatively, you can add this to maven
+```xml
+<repositories>
+  <repository>
+    <id>jitpack.io</id>
+    <url>https://jitpack.io</url>
+  </repository>
+</repositories>
+```
+and add the dependency
+```xml
+<dependency>
+  <groupId>com.github.sirvar</groupId>
+  <artifactId>bluetoothkit-android</artifactId>
+  <version>0.2</version>
+</dependency>
+
 ```
 ## Usage
 
