@@ -10,18 +10,42 @@ import java.util.*
  * BluetoothKit controller to interface with Android BluetoothAdapter and BluetoothSocket
  * @author Rikin Katyal
  */
-class BluetoothKit() {
+class BluetoothKit {
 
-    private val TAG = "BluetoothKit"
-    private var bluetoothAdapter: BluetoothAdapter
-    private lateinit var bluetoothSocket: BluetoothKitSocketInterface
-
-    init {
-        bluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
+    companion object {
+        private const val TAG = "BluetoothKit"
     }
 
     /**
+     * The BluetoothAdapter being used
+     * @see android.bluetooth.BluetoothAdapter
+     */
+    var bluetoothAdapter: BluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
+        private set
+
+    /**
+     * The bluetooth socket implementing BluetoothKitSocketInterface
+     * @see BluetoothKitSocketInterface
+     */
+    lateinit var bluetoothSocket: BluetoothKitSocketInterface
+        private set
+
+    var isEnabled: Boolean
+        /**
+         * Checks if bluetooth is enabled
+         * @return boolean enabled status
+         */
+        get() = bluetoothAdapter.isEnabled
+        /**
+         * Enables or disables bluetooth on device
+         */
+        set(value) {
+            if (value) enable() else disable()
+        }
+
+    /**
      * Enables bluetooth on device
+     * @return whether or not bluetooth was enabled successfully
      */
     fun enable(): Boolean {
         return bluetoothAdapter.enable()
@@ -29,122 +53,99 @@ class BluetoothKit() {
 
     /**
      * Disable bluetooth on device
+     * @return whether or not bluetooth was disabled successfully
      */
     fun disable(): Boolean {
         return bluetoothAdapter.disable()
     }
 
     /**
-     * Checks if bluetooth is enabled
-     * @return boolean enabled status
-     */
-    fun isEnabled(): Boolean {
-        return bluetoothAdapter.isEnabled
-    }
-
-    /**
-     * Gets Set of paired BluetoothDevice
+     * The set of paired BluetoothDevice
      * @see android.bluetooth.BluetoothDevice
      * @see Set
      */
-    fun getPairedDevices(): Set<BluetoothDevice> {
-        return bluetoothAdapter.bondedDevices
-    }
+    val pairedDevices: Set<BluetoothDevice>
+        get() = bluetoothAdapter.bondedDevices
 
     /**
-     * Get paired BluetoothDevice by name
+     * Get a paired BluetoothDevice by name
      * @param name paired device name to get
      * @return BluetoothDevice the device if it exists, else null
      * @see android.bluetooth.BluetoothDevice
      */
     fun getDeviceByName(name: String): BluetoothDevice? {
-        val devices: Set<BluetoothDevice> = getPairedDevices()
-        for (device: BluetoothDevice in devices)
-            if (device.name.equals(name))
-                return device
-        return null
+        return pairedDevices.singleOrNull { device ->
+            device.name == name
+        }
     }
 
     /**
-     * Get paired BluetoothDevice by MAC address
+     * Get a paired BluetoothDevice by MAC address
      * @param address MAC address of device to get
      * @return BluetoothDevice the device if it exists, else null
      * @see android.bluetooth.BluetoothDevice
      */
     fun getDeviceByAddress(address: String): BluetoothDevice? {
-        val devices: Set<BluetoothDevice> = getPairedDevices()
-        for (device: BluetoothDevice in devices)
-            if (device.address.equals(address))
-                return device
-        return null
+        return pairedDevices.singleOrNull { device ->
+            device.address == address
+        }
     }
 
     /**
-     * Connect to BluetoothDevice with random UUID
-     * @param BluetoothDevice device to connect to
+     * Connect to a BluetoothDevice with a given string UUID
+     * @param device device to connect to
+     * @param uuid connection UUID
+     * @return whether or not the connection was successful
      */
-    fun connect(device: BluetoothDevice) {
-        connect(device, UUID.randomUUID())
+    fun connect(device: BluetoothDevice, uuid: String): Boolean {
+        return connect(device, UUID.fromString(uuid))
     }
 
     /**
-     * Connect to BluetoothDevice with UUID as string
-     * @param BluetoothDevice device to connect to
-     * @param String connection UUID
+     * Connect to BluetoothDevice with specific UUID or a random one if not specified
+     * @param device device to connect to
+     * @param uuid connection UUID
+     * @return whether or not the connection was successful
      */
-    fun connect(device: BluetoothDevice, uuid: String) {
-        connect(device, UUID.fromString(uuid))
-    }
-
-    /**
-     * Connect to BluetoothDevice with specific UUID
-     * @param BluetoothDevice device to connect to
-     * @param UUID connection UUID
-     */
-    fun connect(device: BluetoothDevice, uuid: UUID) {
+    fun connect(device: BluetoothDevice, uuid: UUID = UUID.randomUUID()): Boolean {
         // attempt fast insecure connection
         bluetoothSocket = BluetoothKitSocket(device.createRfcommSocketToServiceRecord(uuid))
-        try {
+        return try {
             bluetoothSocket.connect()
+            true
         } catch (e: IOException) {
             Log.w(TAG, "Connection failed. Trying to establish a secure connection")
             // attempt slow secured connection
             bluetoothSocket = BluetoothKitSecuredSocket(bluetoothSocket.socket)
             try {
                 bluetoothSocket.connect()
+                true
             } catch (e: IOException) {
                 Log.w(TAG, "Secure connection failed. Stopping.", e)
+                false
             } catch (e: Exception) {
                 Log.w(TAG, "Could not connect to device. Stopping.", e)
+                false
             }
         }
     }
 
     /**
-     * Write ByteArray to the output stream
-     * @param ByteArray the data
+     * Write Int byte to the output stream
+     * @param b the byte
      */
-    fun write(b: ByteArray) {
+    fun write(b: Int) {
         bluetoothSocket.outputStream.write(b)
     }
 
     /**
      * Write ByteArray to the output stream with offset and length
-     * @param ByteArray the data
-     * @param Int the start offset in the data
-     * @param Int  the number of bytes to write
-     *
+     * @param b the data
+     * @param off the start offset in the data (defaults to 0)
+     * @param len the number of bytes to write (defaults to the total number of bytes)
      */
-    fun write(b: ByteArray, off: Int, len: Int) {
+    fun write(b: ByteArray, off: Int = 0, len: Int = b.size) {
         bluetoothSocket.outputStream.write(b, off, len)
-    }
-
-    /**
-     * Write Int byte to the output stream
-     * @param Int the byte
-     */
-    fun write(b: Int) {
-        bluetoothSocket.outputStream.write(b)
     }
 
     /**
@@ -157,21 +158,13 @@ class BluetoothKit() {
 
     /**
      * Reads up to len bytes of data from the input stream into an array of bytes
-     * @param ByteArray the data
-     * @param Int the start offset in the data
-     * @param Int the max number of bytes to write
+     * @param b the data
+     * @param off the start offset in the data (defaults to 0)
+     * @param len the max number of bytes to write (defaults to the total number of bytes)
      * @return the total number of bytes read into the buffer, or -1 if there is no more data
      */
-    fun read(b: ByteArray, off: Int, len: Int): Int {
+    fun read(b: ByteArray, off: Int = 0, len: Int = b.size): Int {
         return bluetoothSocket.inputStream.read(b, off, len)
-    }
-
-    /**
-     * Reads some number of bytes from the input stream and stores them into the buffer array b
-     * @param ByteArray the buffer into which the data is read
-     */
-    fun read(b: ByteArray): Int {
-        return bluetoothSocket.inputStream.read(b)
     }
 
     /**
@@ -183,23 +176,4 @@ class BluetoothKit() {
         bluetoothSocket.outputStream.close()
         bluetoothSocket.close()
     }
-
-    /**
-     * Get the BluetoothAdapter
-     * @return BluetoothAdapter
-     * @see android.bluetooth.BluetoothAdapter
-     */
-    fun getBluetoothAdapter(): BluetoothAdapter {
-        return bluetoothAdapter
-    }
-
-    /**
-     * Get the bluetooth socket implementing BluetoothKitSocketInterface
-     * @return BluetoothKitSocketInterface
-     * @see BluetoothKitSocketInterface
-     */
-    fun getBluetoothSocket(): BluetoothKitSocketInterface {
-        return bluetoothSocket
-    }
-
 }
