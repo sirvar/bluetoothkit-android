@@ -115,18 +115,23 @@ class BluetoothKit {
             true
         } catch (e: IOException) {
             Log.w(TAG, "Connection failed. Trying to establish a secure connection")
-            // attempt slow secured connection
-            bluetoothSocket = BluetoothKitSecuredSocket(bluetoothSocket.socket)
             try {
-                bluetoothSocket.connect()
-                true
-            } catch (e: IOException) {
-                Log.w(TAG, "Secure connection failed. Stopping.", e)
-                false
-            } catch (e: Exception) {
-                Log.w(TAG, "Could not connect to device. Stopping.", e)
+                // attempt slow secured connection
+                bluetoothSocket = BluetoothKitSecuredSocket(bluetoothSocket.socket)
+                try {
+                    bluetoothSocket.connect()
+                    true
+                } catch (e: IOException) {
+                    Log.w(TAG, "Secure connection failed. Stopping.", e)
+                    false
+                }
+            } catch (e: IllegalStateException) {
+                Log.w(TAG, "Could not create secure connection. Stopping.", e)
                 false
             }
+        } catch (e: Exception) {
+            Log.w(TAG, "Could not connect to device. Stopping.", e)
+            false
         }
     }
 
