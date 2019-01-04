@@ -21,7 +21,7 @@ allprojects {
 then add the dependency
 ```gradle
 dependencies {
-  implementation 'com.github.sirvar:bluetoothkit-android:v0.2'
+  implementation 'com.github.sirvar:bluetoothkit-android:v0.3'
 }
 ```
 Alternatively, you can add this to maven
@@ -38,7 +38,7 @@ and add the dependency
 <dependency>
   <groupId>com.github.sirvar</groupId>
   <artifactId>bluetoothkit-android</artifactId>
-  <version>0.2</version>
+  <version>0.3</version>
 </dependency>
 
 ```
