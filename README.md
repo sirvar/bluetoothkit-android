@@ -46,12 +46,16 @@ and add the dependency
 
 ### Initialize
 ```kotlin
-val bluetoothKit: BluetoothKit = BluetoothKit()
+val bluetoothKit = BluetoothKit()
 ```
 
 ### Enable Bluetooth
 ```kotlin
 bluetoothKit.enable()
+```
+Alternatively, you may also do:
+```kotlin
+bluetoothKit.isEnabled = true
 ```
 ### Get Device
 ```kotlin
