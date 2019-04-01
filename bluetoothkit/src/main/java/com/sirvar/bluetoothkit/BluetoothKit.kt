@@ -2,6 +2,7 @@ package com.sirvar.bluetoothkit
 
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
+import android.bluetooth.BluetoothHeadset
 import android.util.Log
 import java.io.IOException
 import java.util.*
@@ -57,6 +58,14 @@ class BluetoothKit {
      */
     fun disable(): Boolean {
         return bluetoothAdapter.disable()
+    }
+
+    /**
+     * Checks if bluetooth is connected
+     * @return boolean connection status
+     */
+    fun isConnected(): Boolean {
+        return bluetoothAdapter.getProfileConnectionState(BluetoothHeadset.HEADSET) == BluetoothHeadset.STATE_CONNECTED
     }
 
     /**
