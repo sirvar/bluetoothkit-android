@@ -69,4 +69,9 @@ bluetoothKit.connect(device)
 
 ### Check out the complete docs [here](https://sirvar.github.io/bluetoothkit-android/com.sirvar.bluetoothkit/-bluetooth-kit/index.html)
 
+#### Apps currently using BluetoothKit:
+- https://play.google.com/store/apps/details?id=com.sirvar.quickconnect
+
+*If you're using BluetoothKit, feel free to make a PR and add it to the list*
+
 Made with ❤ by Rikin Katyal
